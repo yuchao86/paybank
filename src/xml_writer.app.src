@@ -1,0 +1,6 @@
+{application, xml_writer,
+ [
+  {description, "XML Serialisation API"},
+  {vsn, "0.0.1"},
+  {applications, [kernel, stdlib]}
+ ]}.

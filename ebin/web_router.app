@@ -1,0 +1,12 @@
+{application, web_router,
+ [{description, "Generic web router"},
+  {vsn, "0.1.0"},
+  {modules, [web_router_app,
+             web_router_sup,
+             web_router,
+             web_router_mnesia,
+             web_router_exchange]},
+  {registered, [web_router_sup]},
+  {applications, [kernel, stdlib, mnesia]},
+  {mod, {web_router_app, []}},
+  {start_phases, []}]}.

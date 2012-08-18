@@ -1,0 +1,29 @@
+#!/bin/sh
+
+SCRIPT=`basename $0`
+NODE="restmail"
+
+case "$1" in
+    start)
+	cd `dirname $0`
+	exec erl -pa $PWD/ebin $PWD/deps/*/ebin -boot start_sasl -s restmail -sname $NODE -detached
+	;;
+    stop)
+	cd `dirname $0`
+	exec erl -sname stop-$NODE -eval "rpc:call($NODE@`hostname`, init, stop, [])." -s init stop
+	;;
+    attach)
+	cd `dirname $0`
+	exec erl -sname attach-$NODE -remsh $NODE@`hostname`
+	;;
+    console)
+	cd `dirname $0`
+	exec erl -pa $PWD/ebin $PWD/deps/*/ebin -boot start_sasl -s reloader -s restmail
+	;;
+    *)
+        echo "Usage: $SCRIPT {start|stop|attach|console}"
+        exit 1
+        ;;
+esac
+
+exit 0

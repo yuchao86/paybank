@@ -1,0 +1,22 @@
+Introduction
+------------
+
+This is a library application for OTP, suitable to handle HTTP
+requests and responses. It includes functions suitable to
+payBank gateway for China bank.
+
+This was very much done for fun, and to experiment a little bit
+more with erlang while learning it, so I dont recommend you
+(still) to use it in a production environment.
+
+Please send your comments to yuchao86@gmail.com, I'll be glad
+to improve and/or correct things!
+
+Installation
+------------
+Find the build at the http://weibo.com/yuchao86
+
+Reference
+-------------
+http://erlang.org
+and so on

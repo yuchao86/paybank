@@ -1,0 +1,67 @@
+web_router is a routing server that uses mnesia to keep track of
+exchanges, routes and callbacks.
+
+Callbacks are funs.  Applicatons/Processes/Other tell web_router
+to invoke a callback on a certain routing key for a certain exchange.
+
+If your exchange was "example.com" and you had an about page and a
+nyse stock page you might have callbacks assigned to the routes:
+
+<<"about">> and <<"stock.nyse">>.
+
+Routing keys should in general be binaries (use web_router:key as
+a helper method) and can be anything.  Typical usage would be
+to take each '/' in a url and turn it into a '.'
+
+'users/12' becomes 'users.12'
+
+For Restful interface you may want a callback to serve any user id
+so you invoke a callback on the routing key 'users.*'.
+
+* matches any one section.
+# matches one or more section.
+
+'users.*' matches 'users.12' but not 'users.12.edit'
+'users.#' matches 'users.12' and 'users.12.edit'
+'users.*.edit' would match 'users.12.edit'
+
+
+Adding Exchanges:
+
+1> web_router_exchange:declare(ExchangeName, Type, Durable, AutoDelete)
+#exchange
+
+ExchangeName is the name of your exchange (any term)
+
+Type can be topic, direct or fanout.  Currently only topic is supported.
+
+Durable tells web_router to keep the exchange stored on disk so if
+the server crashes it can be automaticaly recovered when it comes back
+online.
+
+AutoDelete would delete an exchange if no callbacks existed for it but
+is currently not implemented.
+
+
+Adding Callbacks (bindings):
+
+2> web_router_exchange:add_binding(ExchangeName, Callback, RoutingKey)
+
+Callback is a fun.
+RoutingKey is a binary key to match against (<<"users.12">> or
+<<"get.forums.12.topics">> etc)
+
+
+Calling a route:
+
+3> web_router_exchange:route(#exchange, RoutingKey, Args)
+
+#exchange is the exchange record returned by declare.  Later
+this may allow you to simply specify a name instead of a record.
+
+Args is a list of arguments to pass to the callback.
+
+Currently if multiple callbacks are assigned to the key it returns an
+array of what the callbacks return.  This may be subject to change.
+
+

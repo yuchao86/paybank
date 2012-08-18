@@ -1,0 +1,10 @@
+-define(PORT_LISTEN, 9876).
+
+-define(SMTP_OPTIONS, [{relay, "smtp.gmail.com"},
+		       {port, 587},
+		       {tls, always},
+		       {username, "support@example.com"},
+		       {password, ""}]).
+
+-define(SMTP_FROM_HEADER, <<"example.com <support@example.com>">>).
+-define(SMTP_FROM_ADDR, <<"support@example.com">>).

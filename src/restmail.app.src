@@ -1,0 +1,18 @@
+%%-*- mode: erlang -*-
+{application, restmail,
+ [
+  {description, "restmail"},
+  {vsn, "0.2"},
+  {modules, []},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  inets,
+                  crypto,
+                  mochiweb,
+                  webmachine
+                 ]},
+  {mod, { restmail_app, []}},
+  {env, []}
+ ]}.
